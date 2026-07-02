@@ -26,7 +26,7 @@
         }
 
         body {
-            background: var(--bg);
+            background: #06060b;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -43,68 +43,145 @@
             overflow: hidden;
         }
 
-        body::before {
-            content: '';
+        /* Animierter Hintergrund mit mehreren Ebenen */
+        .bg-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Ebene 1: Langsame wandernde Farbverläufe */
+        .bg-gradient-1 {
             position: fixed;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
             background:
-                radial-gradient(ellipse at 30% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 60%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 80%, rgba(99, 102, 241, 0.04) 0%, transparent 40%);
-            pointer-events: none;
+                radial-gradient(ellipse at 25% 25%, rgba(99, 102, 241, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 75% 30%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 70%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 35% 65%, rgba(99, 102, 241, 0.1) 0%, transparent 40%);
+            animation: gradientShift 12s ease-in-out infinite;
             z-index: 0;
-            animation: shimmer 8s ease-in-out infinite;
         }
 
-        @keyframes shimmer {
+        @keyframes gradientShift {
             0%,
             100% {
-                transform: translate(0, 0);
+                transform: translate(0, 0) rotate(0deg);
             }
             25% {
-                transform: translate(1%, -1%);
+                transform: translate(2%, -1%) rotate(1deg);
             }
             50% {
-                transform: translate(-1%, 1%);
+                transform: translate(-1%, 2%) rotate(-1deg);
             }
             75% {
-                transform: translate(-0.5%, -0.5%);
+                transform: translate(-2%, -1%) rotate(0.5deg);
             }
         }
 
+        /* Ebene 2: Mittlere Glanzpunkte */
+        .bg-gradient-2 {
+            position: fixed;
+            top: -30%;
+            left: -30%;
+            width: 160%;
+            height: 160%;
+            background:
+                radial-gradient(circle at 20% 40%, rgba(168, 85, 247, 0.08) 0%, transparent 35%),
+                radial-gradient(circle at 80% 30%, rgba(99, 102, 241, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 50% 80%, rgba(139, 92, 246, 0.06) 0%, transparent 30%),
+                radial-gradient(circle at 10% 75%, rgba(59, 130, 246, 0.07) 0%, transparent 35%);
+            animation: gradientShift2 10s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        @keyframes gradientShift2 {
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(-1%, 1%) scale(1.02);
+            }
+            66% {
+                transform: translate(1%, -1%) scale(0.98);
+            }
+        }
+
+        /* Ebene 3: Glanz-Linien */
         .gloss-line-top {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 1px;
+            height: 2px;
             background: linear-gradient(90deg,
                     transparent 0%,
-                    rgba(99, 102, 241, 0.3) 20%,
-                    rgba(139, 92, 246, 0.5) 50%,
-                    rgba(99, 102, 241, 0.3) 80%,
+                    rgba(99, 102, 241, 0.2) 15%,
+                    rgba(139, 92, 246, 0.5) 35%,
+                    rgba(168, 85, 247, 0.7) 50%,
+                    rgba(139, 92, 246, 0.5) 65%,
+                    rgba(99, 102, 241, 0.2) 85%,
                     transparent 100%);
             z-index: 101;
             pointer-events: none;
-            animation: glossMove 4s ease-in-out infinite;
+            animation: glossLineMove 5s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3), 0 0 40px rgba(139, 92, 246, 0.1);
         }
 
-        @keyframes glossMove {
+        @keyframes glossLineMove {
             0%,
             100% {
                 opacity: 0.5;
+                filter: blur(0px);
             }
             50% {
                 opacity: 1;
+                filter: blur(1px);
             }
         }
 
+        /* Ebene 4: Schwebende Partikel */
+        .particles-container {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 0 8px rgba(139, 92, 246, 0.5), 0 0 20px rgba(139, 92, 246, 0.2);
+            animation: floatParticle linear infinite;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(0) translateX(0) scale(1);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(40px) scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        /* Werbebanner */
         .ad-banner-top {
             position: fixed;
-            top: 1px;
+            top: 2px;
             left: 0;
             right: 0;
             z-index: 100;
@@ -545,8 +622,15 @@
 </head>
 <body>
 
+    <!-- Hintergrund-Ebenen -->
+    <div class="bg-gradient-1"></div>
+    <div class="bg-gradient-2"></div>
     <div class="gloss-line-top"></div>
 
+    <!-- Partikel-Container -->
+    <div class="particles-container" id="particlesContainer"></div>
+
+    <!-- Werbebanner -->
     <div class="ad-banner-top">
         <span class="ad-sparkle">✦</span>
         <span>Suchst du nach Roblox Scripts?</span>
@@ -587,6 +671,34 @@
     </div>
 
     <script>
+        // Partikel erstellen
+        const particlesContainer = document.getElementById('particlesContainer');
+        const particleCount = 30;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+
+            const size = Math.random() * 4 + 2;
+            const left = Math.random() * 100;
+            const delay = Math.random() * 12;
+            const duration = Math.random() * 10 + 8;
+            const opacity = Math.random() * 0.4 + 0.2;
+
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = left + '%';
+            particle.style.bottom = '-20px';
+            particle.style.animationDuration = duration + 's';
+            particle.style.animationDelay = delay + 's';
+            particle.style.opacity = opacity;
+            particle.style.background = `rgba(${139 + Math.random() * 40}, ${92 + Math.random() * 30}, ${246 + Math.random() * 9}, ${opacity})`;
+            particle.style.boxShadow = `0 0 ${size * 3}px rgba(139, 92, 246, ${opacity})`;
+
+            particlesContainer.appendChild(particle);
+        }
+
+        // Tooltip Logik
         const downloadBtn = document.getElementById('downloadBtn');
         const cursorTooltip = document.getElementById('cursorTooltip');
 
