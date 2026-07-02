@@ -1,15 +1,137 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <title>GlassGame</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>GlassGame | Coming Soon</title>
+    <style>
+        :root {
+            --bg: #0b0b10;
+            --surface: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.06);
+            --text: #e4e4e7;
+            --muted: #71717a;
+            --accent: #6366f1;
+            --radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Inter', 'SF Pro Display', system-ui, -apple-system, sans-serif;
+            padding: 24px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 64px 48px;
+            text-align: center;
+            max-width: 480px;
+            width: 100%;
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 40px;
+        }
+
+        .brand-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 20px 32px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius);
+            cursor: not-allowed;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+            margin-bottom: 32px;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .download-btn .icon {
+            font-size: 1.4rem;
+            opacity: 0.7;
+        }
+
+        .coming-soon {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #f87171;
+            background: rgba(248, 113, 113, 0.08);
+            border: 1px solid rgba(248, 113, 113, 0.2);
+            padding: 10px 24px;
+            border-radius: 9999px;
+        }
+
+        .footer-text {
+            margin-top: 36px;
+            font-size: 0.8rem;
+            color: var(--muted);
+            letter-spacing: 0.03em;
+        }
+    </style>
 </head>
 <body>
-  <h1>Willkommen bei GlassGame</h1>
-  <p>Meine erste Website läuft jetzt über GitHub Pages.</p>
+    <div class="card">
+        <div class="brand">
+            <span class="brand-dot"></span> GlassGame
+        </div>
 
-  <button onclick="alert('läuft')">
-    Klick mich
-  </button>
+        <button class="download-btn" disabled>
+            <span class="icon">↓</span>
+            Download
+            <span class="icon">↓</span>
+        </button>
+
+        <div class="coming-soon">
+            Coming Soon
+        </div>
+
+        <p class="footer-text">In Kürze verfügbar.</p>
+    </div>
 </body>
 </html>
