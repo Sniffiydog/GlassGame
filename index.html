@@ -399,7 +399,7 @@
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: var(--radius);
-            cursor: pointer;
+            cursor: not-allowed;
             opacity: 0.5;
             transition: all 0.3s;
             pointer-events: auto;
@@ -426,17 +426,6 @@
                     rgba(255, 255, 255, 0.05) 50%,
                     transparent 65%);
             animation: btnShine 3.5s ease-in-out infinite;
-        }
-
-        .download-btn:hover {
-            opacity: 0.85;
-            border-color: rgba(99, 102, 241, 0.5);
-            box-shadow:
-                0 0 30px rgba(99, 102, 241, 0.3),
-                0 0 60px rgba(99, 102, 241, 0.1),
-                inset 0 0 20px rgba(99, 102, 241, 0.05);
-            background: rgba(99, 102, 241, 0.06);
-            transform: translateY(-2px);
         }
 
         .download-btn .icon {
@@ -572,7 +561,7 @@
         <span class="ad-text">— Jetzt entdecken</span>
     </div>
 
-    <div class="cursor-tooltip" id="cursorTooltip">Free Games Incoming</div>
+    <div class="cursor-tooltip" id="cursorTooltip">Incoming Soon</div>
 
     <div class="card">
         <div class="brand">
@@ -580,11 +569,11 @@
         </div>
 
         <div class="download-wrapper">
-            <a href="https://vexyrondev.github.io/Vexyron.com/" target="_blank" rel="noopener noreferrer" class="download-btn" id="downloadBtn">
+            <button class="download-btn" id="downloadBtn" disabled>
                 <span class="icon">↓</span>
                 Download
                 <span class="icon">↓</span>
-            </a>
+            </button>
         </div>
 
         <div class="page-down-wrapper">
