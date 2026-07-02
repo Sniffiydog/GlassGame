@@ -1,7 +1,7 @@
 const music = document.getElementById("bg-music");
 
 window.addEventListener("click", () => {
-    music.volume = 0.35;
+    music.volume = 0.25;
     music.play().catch(() => {});
 }, { once: true });
 
