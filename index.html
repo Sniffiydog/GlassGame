@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>GlassGame | Coming Soon</title>
+    <title>GlassGame | Page Down</title>
     <style>
         :root {
             --bg: #0b0b10;
@@ -40,18 +40,78 @@
             -moz-user-select: none;
             -ms-user-select: none;
             position: relative;
+            overflow: hidden;
         }
 
-        .ad-banner-top {
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background:
+                radial-gradient(ellipse at 30% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 60%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(99, 102, 241, 0.04) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: 0;
+            animation: shimmer 8s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(1%, -1%);
+            }
+            50% {
+                transform: translate(-1%, 1%);
+            }
+            75% {
+                transform: translate(-0.5%, -0.5%);
+            }
+        }
+
+        .gloss-line-top {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
+            height: 1px;
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(99, 102, 241, 0.3) 20%,
+                    rgba(139, 92, 246, 0.5) 50%,
+                    rgba(99, 102, 241, 0.3) 80%,
+                    transparent 100%);
+            z-index: 101;
+            pointer-events: none;
+            animation: glossMove 4s ease-in-out infinite;
+        }
+
+        @keyframes glossMove {
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .ad-banner-top {
+            position: fixed;
+            top: 1px;
+            left: 0;
+            right: 0;
             z-index: 100;
-            background: rgba(99, 102, 241, 0.06);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border-bottom: 1px solid rgba(99, 102, 241, 0.15);
+            background: rgba(99, 102, 241, 0.04);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(99, 102, 241, 0.12);
             padding: 14px 24px;
             display: flex;
             align-items: center;
@@ -65,6 +125,7 @@
             font-size: 0.85rem;
             font-weight: 500;
             letter-spacing: 0.04em;
+            text-shadow: 0 0 20px rgba(165, 180, 252, 0.3);
         }
 
         .ad-banner-top a {
@@ -76,16 +137,42 @@
             border: 1px solid rgba(99, 102, 241, 0.3);
             padding: 8px 20px;
             border-radius: 9999px;
-            transition: all 0.2s;
+            transition: all 0.3s;
             letter-spacing: 0.03em;
             pointer-events: auto;
             user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ad-banner-top a::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg,
+                    transparent 40%,
+                    rgba(255, 255, 255, 0.1) 50%,
+                    transparent 60%);
+            animation: btnShine 3s ease-in-out infinite;
+        }
+
+        @keyframes btnShine {
+            0% {
+                transform: translateX(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) rotate(45deg);
+            }
         }
 
         .ad-banner-top a:hover {
             background: rgba(99, 102, 241, 0.35);
             border-color: rgba(99, 102, 241, 0.5);
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.4), inset 0 0 20px rgba(99, 102, 241, 0.1);
+            transform: translateY(-1px);
         }
 
         .ad-banner-bottom {
@@ -94,9 +181,9 @@
             left: 0;
             right: 0;
             z-index: 100;
-            background: rgba(99, 102, 241, 0.04);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            background: rgba(99, 102, 241, 0.03);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
             border-top: 1px solid rgba(99, 102, 241, 0.1);
             padding: 12px 24px;
             display: flex;
@@ -112,6 +199,7 @@
             font-weight: 500;
             letter-spacing: 0.05em;
             text-transform: uppercase;
+            text-shadow: 0 0 15px rgba(129, 140, 248, 0.3);
         }
 
         .ad-banner-bottom .ad-text {
@@ -129,20 +217,38 @@
             border: 1px solid rgba(99, 102, 241, 0.25);
             padding: 7px 18px;
             border-radius: 9999px;
-            transition: all 0.2s;
+            transition: all 0.3s;
             pointer-events: auto;
             user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ad-banner-bottom a::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg,
+                    transparent 40%,
+                    rgba(255, 255, 255, 0.08) 50%,
+                    transparent 60%);
+            animation: btnShine 3s ease-in-out infinite;
         }
 
         .ad-banner-bottom a:hover {
             background: rgba(99, 102, 241, 0.3);
             border-color: rgba(99, 102, 241, 0.45);
-            box-shadow: 0 0 16px rgba(99, 102, 241, 0.25);
+            box-shadow: 0 0 25px rgba(99, 102, 241, 0.3), inset 0 0 15px rgba(99, 102, 241, 0.08);
+            transform: translateY(-1px);
         }
 
         .ad-sparkle {
             display: inline-block;
             animation: sparkle 1.8s ease-in-out infinite;
+            filter: drop-shadow(0 0 8px rgba(165, 180, 252, 0.6));
         }
 
         @keyframes sparkle {
@@ -158,16 +264,19 @@
         }
 
         .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 24px;
             padding: 64px 48px;
             text-align: center;
             max-width: 520px;
             width: 100%;
-            backdrop-filter: blur(32px);
-            -webkit-backdrop-filter: blur(32px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                0 0 80px rgba(99, 102, 241, 0.08);
             position: relative;
             z-index: 1;
             user-select: none;
@@ -176,6 +285,47 @@
             -ms-user-select: none;
             margin-top: 60px;
             margin-bottom: 60px;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 20%,
+                    rgba(99, 102, 241, 0.06) 0%,
+                    transparent 50%);
+            pointer-events: none;
+            animation: cardGlow 6s ease-in-out infinite;
+        }
+
+        @keyframes cardGlow {
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(2%, -2%);
+            }
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(255, 255, 255, 0.1) 20%,
+                    rgba(255, 255, 255, 0.2) 50%,
+                    rgba(255, 255, 255, 0.1) 80%,
+                    transparent 100%);
+            pointer-events: none;
         }
 
         .brand {
@@ -192,6 +342,8 @@
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
+            position: relative;
+            z-index: 1;
         }
 
         .brand-dot {
@@ -199,7 +351,10 @@
             height: 5px;
             background: #ef4444;
             border-radius: 50%;
-            box-shadow: 0 0 4px #ef4444, 0 0 8px rgba(239, 68, 68, 0.5);
+            box-shadow:
+                0 0 6px #ef4444,
+                0 0 12px rgba(239, 68, 68, 0.6),
+                0 0 24px rgba(239, 68, 68, 0.3);
             animation: breathe 2.6s ease-in-out infinite;
         }
 
@@ -208,12 +363,12 @@
             100% {
                 transform: scale(1);
                 opacity: 0.6;
-                box-shadow: 0 0 3px #ef4444, 0 0 6px rgba(239, 68, 68, 0.3);
+                box-shadow: 0 0 4px #ef4444, 0 0 8px rgba(239, 68, 68, 0.4), 0 0 16px rgba(239, 68, 68, 0.2);
             }
             50% {
-                transform: scale(1.4);
+                transform: scale(1.5);
                 opacity: 1;
-                box-shadow: 0 0 6px #ef4444, 0 0 12px rgba(239, 68, 68, 0.6);
+                box-shadow: 0 0 8px #ef4444, 0 0 16px rgba(239, 68, 68, 0.7), 0 0 30px rgba(239, 68, 68, 0.5);
             }
         }
 
@@ -226,6 +381,7 @@
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
+            z-index: 1;
         }
 
         .download-btn {
@@ -240,12 +396,12 @@
             letter-spacing: 0.04em;
             text-transform: uppercase;
             color: var(--text);
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: var(--radius);
             cursor: pointer;
             opacity: 0.5;
-            transition: all 0.2s;
+            transition: all 0.3s;
             pointer-events: auto;
             user-select: none;
             -webkit-user-select: none;
@@ -253,12 +409,34 @@
             -ms-user-select: none;
             position: relative;
             text-decoration: none;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg,
+                    transparent 35%,
+                    rgba(255, 255, 255, 0.05) 50%,
+                    transparent 65%);
+            animation: btnShine 3.5s ease-in-out infinite;
         }
 
         .download-btn:hover {
-            opacity: 0.8;
-            border-color: rgba(99, 102, 241, 0.4);
-            box-shadow: 0 0 24px rgba(99, 102, 241, 0.2);
+            opacity: 0.85;
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow:
+                0 0 30px rgba(99, 102, 241, 0.3),
+                0 0 60px rgba(99, 102, 241, 0.1),
+                inset 0 0 20px rgba(99, 102, 241, 0.05);
+            background: rgba(99, 102, 241, 0.06);
+            transform: translateY(-2px);
         }
 
         .download-btn .icon {
@@ -268,24 +446,27 @@
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
+            filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.2));
         }
 
         .cursor-tooltip {
             position: fixed;
             pointer-events: none;
             z-index: 9999;
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #a5b4fc;
+            background: rgba(99, 102, 241, 0.15);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: #c7d2fe;
             font-size: 0.8rem;
             font-weight: 500;
             letter-spacing: 0.03em;
             padding: 10px 18px;
             border-radius: 9999px;
             white-space: nowrap;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.5),
+                0 0 20px rgba(99, 102, 241, 0.2);
             opacity: 0;
             transition: opacity 0.15s ease;
             transform: translate(16px, 16px);
@@ -299,14 +480,23 @@
             opacity: 1;
         }
 
-        .coming-soon {
+        .page-down-wrapper {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .page-down {
             display: inline-block;
             font-size: 0.8rem;
             font-weight: 600;
             letter-spacing: 0.2em;
             text-transform: uppercase;
             color: #f87171;
-            background: rgba(248, 113, 113, 0.08);
+            background: rgba(248, 113, 113, 0.06);
             border: 1px solid rgba(248, 113, 113, 0.2);
             padding: 10px 24px;
             border-radius: 9999px;
@@ -314,10 +504,11 @@
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
+            text-shadow: 0 0 20px rgba(248, 113, 113, 0.3);
+            box-shadow: 0 0 20px rgba(248, 113, 113, 0.1);
         }
 
-        .footer-text {
-            margin-top: 36px;
+        .updating-text {
             font-size: 0.8rem;
             color: var(--muted);
             letter-spacing: 0.03em;
@@ -325,10 +516,47 @@
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 1px;
+        }
+
+        .updating-dot {
+            display: inline-block;
+            color: #818cf8;
+            font-weight: 700;
+            animation: dotPulse 1.5s ease-in-out infinite;
+            text-shadow: 0 0 8px rgba(129, 140, 248, 0.4);
+        }
+
+        .updating-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .updating-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes dotPulse {
+            0%,
+            100% {
+                opacity: 0.15;
+                transform: translateY(0);
+            }
+            25% {
+                opacity: 1;
+                transform: translateY(-3px);
+            }
+            50% {
+                opacity: 0.15;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
+
+    <div class="gloss-line-top"></div>
 
     <div class="ad-banner-top">
         <span class="ad-sparkle">✦</span>
@@ -342,7 +570,6 @@
         <span class="ad-text">Roblox Scripts & mehr auf</span>
         <a href="https://vexyrondev.github.io/Vexyron.com/" target="_blank" rel="noopener noreferrer">Vexyron</a>
         <span class="ad-text">— Jetzt entdecken</span>
-        <span class="ad-sparkle">⚡</span>
     </div>
 
     <div class="cursor-tooltip" id="cursorTooltip">Free Games Incoming</div>
@@ -360,11 +587,14 @@
             </a>
         </div>
 
-        <div class="coming-soon">
-            Coming Soon
+        <div class="page-down-wrapper">
+            <div class="page-down">
+                Page Down
+            </div>
+            <div class="updating-text">
+                Updating<span class="updating-dot">.</span><span class="updating-dot">.</span><span class="updating-dot">.</span>
+            </div>
         </div>
-
-        <p class="footer-text">In Kürze verfügbar.</p>
     </div>
 
     <script>
