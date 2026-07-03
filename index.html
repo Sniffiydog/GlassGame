@@ -101,6 +101,7 @@
         .mute-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
         .mute-btn:hover { background: rgba(99,102,241,0.2); border-color: rgba(99,102,241,0.4); box-shadow: 0 0 25px rgba(99,102,241,0.2); transform: scale(1.05); }
         .mute-btn.muted { color: #f87171; border-color: rgba(248,113,113,0.3); background: rgba(248,113,113,0.1); }
+        .mute-btn.auto-muted { color: #f59e0b; border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.1); }
 
         .ad-banner-top {
             position: fixed; top: 2px; left: 0; right: 0; z-index: 100;
@@ -207,9 +208,7 @@
             border-radius: 10px; display: flex; align-items: center; justify-content: center;
             overflow: hidden; flex-shrink: 0;
         }
-        .pd-ad-icon img {
-            width: 100%; height: 100%; object-fit: cover;
-        }
+        .pd-ad-icon img { width: 100%; height: 100%; object-fit: cover; }
         .pd-ad-text { color: #c7d2fe; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.03em; }
         .pd-ad-text strong { color: #e4e4e7; }
         .pd-ad-btn {
@@ -310,6 +309,11 @@
             <line x1="23" y1="9" x2="17" y2="15"/>
             <line x1="17" y1="9" x2="23" y2="15"/>
         </svg>
+        <svg id="iconAutoMuted" viewBox="0 0 24 24" style="display:none;">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <line x1="23" y1="9" x2="17" y2="15"/>
+            <line x1="17" y1="9" x2="23" y2="15"/>
+        </svg>
     </div>
 
     <div class="ad-banner-top">
@@ -382,13 +386,52 @@
         const muteBtn = document.getElementById('muteBtn');
         const iconUnmuted = document.getElementById('iconUnmuted');
         const iconMuted = document.getElementById('iconMuted');
+        const iconAutoMuted = document.getElementById('iconAutoMuted');
         let isMuted = false;
+        let isAutoMuted = false;
+
+        function updateMuteIcon() {
+            iconUnmuted.style.display = 'none';
+            iconMuted.style.display = 'none';
+            iconAutoMuted.style.display = 'none';
+            muteBtn.classList.remove('muted', 'auto-muted');
+
+            if (isAutoMuted) {
+                iconAutoMuted.style.display = 'block';
+                muteBtn.classList.add('auto-muted');
+            } else if (isMuted) {
+                iconMuted.style.display = 'block';
+                muteBtn.classList.add('muted');
+            } else {
+                iconUnmuted.style.display = 'block';
+            }
+        }
+
         muteBtn.addEventListener('click', () => {
-            isMuted = !isMuted;
-            bgMusic.muted = isMuted;
-            iconUnmuted.style.display = isMuted ? 'none' : 'block';
-            iconMuted.style.display = isMuted ? 'block' : 'none';
-            muteBtn.classList.toggle('muted', isMuted);
+            if (isAutoMuted) {
+                // Wenn auto-gemutet, erst auto-mute aufheben
+                isAutoMuted = false;
+                isMuted = false;
+            } else {
+                isMuted = !isMuted;
+            }
+            bgMusic.muted = isMuted || isAutoMuted;
+            updateMuteIcon();
+        });
+
+        // Tab-Wechsel Erkennung
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                // Tab verlassen -> auto-mute
+                isAutoMuted = true;
+                bgMusic.muted = true;
+                updateMuteIcon();
+            } else {
+                // Tab wieder aktiv -> auto-mute aufheben, aber manuellen mute respektieren
+                isAutoMuted = false;
+                bgMusic.muted = isMuted;
+                updateMuteIcon();
+            }
         });
 
         const canvas = document.getElementById('particleCanvas');
@@ -473,12 +516,7 @@
             pdAd.classList.remove('show');
             const elements = pageDownOverlay.querySelectorAll('.pd-title, .pd-subtitle, .pd-status, .pd-footer');
             elements.forEach(el => { el.style.animation = 'none'; el.offsetHeight; el.style.animation = ''; });
-
-            adTimer = setTimeout(() => {
-                pdAd.classList.add('show');
-                setTimeout(() => { pdAd.classList.remove('show'); }, 8000);
-            }, 5000);
-
+            adTimer = setTimeout(() => { pdAd.classList.add('show'); setTimeout(() => { pdAd.classList.remove('show'); }, 8000); }, 5000);
             setTimeout(hidePageDown, SWITCH_INTERVAL);
         }
 
